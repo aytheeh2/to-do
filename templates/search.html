@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Book Search
+{% endblock %}
+
+{% block content %}
+<p class="mt-5 text-center display-5 my-5 p-4 text-primary"> Your Tasks having "{{query}}"</p>
+{% if search_results %}
+{% for i in search_results %}
+<div class="list-group list-group-flush border scrollarea rounded border border-primary">
+    <div class="list-group-item list-group-item-action  py-3 lh-sm" aria-current="true">
+        <div class="row text-start align-items-center justify-content-center">
+            <div class="col-5">
+                <a href="{% url 'todo:taskdetail' i.id %}" class="text-decoration-none text-white">
+                    <strong class="mb-1">{{i.name}}</strong>
+                    <div class="col-10 mb-1 small">{{i.completed}}</div>
+                    <div class="col-10 mb-1 small">{{i.description}}</div>
+                    <div class="">
+                        <p>Date Added: {{i.date_added}}</p>
+                        <p>Date Modified: {{i.date_modified}}</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-5">
+                {% if not i.completed %}
+                <a href="{% url 'todo:completed' i.id %}" type="button" class="btn btn-outline-success">Complete</a>
+                {%endif%}
+                <a href="{% url 'todo:taskdetail' i.id %}" type="button" class="btn btn-outline-secondary">Edit</a>
+                <a href="{% url 'todo:taskDelete' i.id %}" type="button" class="btn btn-outline-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+<div class="text-center my-5">
+    <a href="{% url 'todo:home' %}" type="button" class="btn btn-outline-info  w-25">Go Back</a>
+</div>
+{% else %}
+<h4>No Result Found</h4>
+{% endif %}
+{% endblock %}

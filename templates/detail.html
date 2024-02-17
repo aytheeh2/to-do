@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load bootstrap_tags %}
+<div class="container my-5">
+    <p class="display-5 text-info">Task : {{taskdetail.name}}</p>
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form action="" method="post" class="form-group">
+                {%csrf_token%}
+                {{form|as_bootstrap}}
+                <a href="{% url 'todo:home' %}" type="button" class="btn btn-outline-info w-25">Go Back</a>
+                <button type="submit" class="btn btn-outline-success w-25">Save</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{%endblock content %}

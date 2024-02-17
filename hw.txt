@@ -1,0 +1,13 @@
+todo apps
+model 
+    task,task name,task desc, date added, completed, serializer class,
+
+views
+    get completed tasks
+    not completed tasks
+    all tasks
+    register api view
+    login api view
+
+
+

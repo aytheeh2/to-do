@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{%endblock%}
+
+{% block content %}
+<div class="container my-5 gy-5 ">
+    <div class="my-5">
+        {% if tasklist %}
+        <p class="display-5 text-info">Hello {{request.user}} ,Your Tasks</p>
+        {%else%}
+        <p class="display-5 text-info">Hello {{request.user}}, <span><a class="text-decoration-none text-primary"
+                    href="{% url 'todo:addtask' %}">Add Task</a></span></p>
+        {%endif%}
+
+    </div>
+    <div class="list-group list-group-flush scrollarea ">
+        {% for i in tasklist %}
+        <div class="list-group-item list-group-item-action rounded border border-info my-1  py-3 lh-sm"
+            aria-current="true">
+            <div class="row text-start align-items-center justify-content-center">
+                <div class="col-5 rounded border border-danger p-4">
+                    <a href="{% url 'todo:taskdetail' i.id %}" class="text-decoration-none text-light">
+                        <strong class="mb-1 display-6 ">{{i.name}}</strong>
+                        {% if i.completed %}
+                        <div class="col-10 mb-1 small">Completed : {{i.date_modified}}</div>
+                        {%else%}
+                        <div class="col-10 mb-1 small">Not Completed</div>
+                        <div class="col-10 mb-1 small">{{i.description}}</div>
+                        <div class="">
+                            <p>Added: {{i.date_added}}</p>
+                            <p>Editted: {{i.date_modified}}</p>
+                        </div>
+                        {%endif%}
+                    </a>
+                </div>
+                <div class="col-5">
+                    {% if not i.completed %}
+                    <a href="{% url 'todo:completed' i.id %}" type="button" class="btn btn-outline-success">Complete</a>
+                    {%endif%}
+                    <a href="{% url 'todo:taskdetail' i.id %}" type="button" class="btn btn-outline-secondary">Edit</a>
+                    <a href="{% url 'todo:taskDelete' i.id %}" type="button" class="btn btn-outline-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}

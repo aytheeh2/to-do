@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load bootstrap_tags %}
+<div class="container my-5">
+    <p class="display-5">Task : {{taskdetail.name}}</p>
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <form action="" method="post">
+                {%csrf_token%}
+                <input type="text" name="name" class="form-control my-4" placeholder="Task Name" id="">
+                <textarea name="description" class="form-control my-4" placeholder="Task Description" id="" cols="30"
+                    rows="10"></textarea>
+                <a href="{% url 'todo:home' %}" type="button" class="btn btn-outline-info w-25">Go Back</a>
+                <button type="submit" class="btn btn-outline-success w-25">Save</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{%endblock content %}
