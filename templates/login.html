@@ -7,10 +7,11 @@
             <p class="display-5 my-5 text-info">Login</p>
             <form action="" method="post">
                 {%csrf_token%}
-                <input type="text" name="username" class="form-control" placeholder="Username" id=""><br>
-                <input type="password" name="password" class="form-control" placeholder="Password" id=""><br>
-                <button class="btn btn-outline-info my-3 w-25" type="submit" name="" id="">Login</button>
+                <input type="text" name="username" class="form-control" required placeholder="Username" id=""><br>
+                <input type="password" name="password" class="form-control" required placeholder="Password" id=""><br>
+                <button class="btn btn-outline-info my-3 " type="submit" name="" id="">Login</button>
             </form>
+            <a href="{% url 'todo:register' %}" class="lead text-decoration-none">Dont have an account? Register!</a>
         </div>
     </div>
 </div>

@@ -60,13 +60,13 @@ def completed(request, pk):
 
 @login_required
 def completed_tasks(request):
-    tasks = Task.objects.filter(completed=True).order_by('-date_modified')
+    tasks = Task.objects.filter(completed=True,user=request.user).order_by('-date_modified')
     return render(request, 'completed.html', {'tasks': tasks})
 
 
 @login_required
 def incompleted_tasks(request):
-    tasks = Task.objects.filter(completed=False).order_by('-date_modified')
+    tasks = Task.objects.filter(completed=False,user=request.user).order_by('-date_modified')
     return render(request, 'incomplete.html', {'tasks': tasks})
 
 

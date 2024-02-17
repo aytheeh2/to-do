@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container-md-8">
     <div class="row justify-content-center p-5">
+        {% if tasks %}
         <p class="display-5 text-center my-5 p-4">Completed Tasks</p>
         <div class="col-8 text-center align-items-center ">
             <div class="list-group ">
@@ -34,6 +35,16 @@
             <a class="btn  btn-lg btn-primary mx-2 my-5" href="{% url 'todo:home' %}">All Tasks</a>
             <a class="btn  btn-lg btn-primary mx-2 my-5" href="{% url 'todo:incompleted_tasks' %}">Incomplete Tasks</a>
         </div>
+        {%else%}
+        <div class="col-md-5 rounded border border-danger p-4 mb-1 mb-md-0">
+        <p class="display-5 text-center my-2 p-2">You have not completed any tasks!</p>
+            <div class="text-center">
+            <a class="btn btn-primary mx-2 my-5" href="{% url 'todo:home' %}">Go back</a>
+                <a class="btn  btn-primary mx-2 my-5" href="{% url 'todo:home' %}">All Tasks</a>
+                <a class="btn btn-primary mx-2 my-5" href="{% url 'todo:incompleted_tasks' %}">Incomplete Tasks</a>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {%endblock%}
