@@ -7,8 +7,8 @@
         <div class="col-6 mx-auto">
             <form action="" method="post">
                 {%csrf_token%}
-                <input type="text" name="name" class="form-control my-4" placeholder="Task Name" id="">
-                <textarea name="description" class="form-control my-4" placeholder="Task Description" id="" cols="30"
+                <input type="text" name="name" class="form-control my-4" required placeholder="Task Name" id="">
+                <textarea name="description" class="form-control my-4" required placeholder="Task Description" id="" cols="30"
                     rows="10"></textarea>
                 <a href="{% url 'todo:home' %}" type="button" class="btn btn-outline-info w-25">Go Back</a>
                 <button type="submit" class="btn btn-outline-success w-25">Save</button>

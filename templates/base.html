@@ -12,6 +12,16 @@
 <body data-bs-theme="dark" class="text-white">
     {%include 'navbar.html' %}
     <div class="container-fluid">
+        <div class="row">
+            <div class="col">
+                {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show my-5 text-light text-center" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {%endfor%}
+            </div>
+        </div>
         {% block content%}
 
         {% endblock %}

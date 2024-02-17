@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container-md-8">
+    <div class="row justify-content-center p-5">
+        <p class="display-5 text-center my-5 p-4">Inomplete Tasks</p>
+        <div class="col-8 text-center align-items-center ">
+            <div class="list-group ">
+                {% for task in tasks %}
+                <div class="list-group-item list-group-item-action rounded border border-info my-1 py-3 lh-sm">
+                    <div class="row text-start align-items-center justify-content-center">
+                        <div class="col-md-5 rounded border border-danger p-4 mb-3 mb-md-0">
+                            <a href="{% url 'todo:taskdetail' task.id %}" class="text-decoration-none text-light">
+                                <strong class="mb-1 display-6">{{ task.name }}</strong>
+                                {% if task.completed %}
+                                <div class="col-10 mb-1 small">Completed : {{ task.date_modified }}</div>
+                                {% else %}
+                                <div class="col-10 mb-1 small">Not Completed</div>
+                                <div class="col-10 mb-1 small">{{ task.description }}</div>
+                                <div class="">
+                                    <p>Added: {{ task.date_added }}</p>
+                                    <p>Edited: {{ task.date_modified }}</p>
+                                </div>
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            <a class="btn  btn-lg btn-primary mx-2 my-5" href="{% url 'todo:home' %}">Go back</a>
+            <a class="btn  btn-lg btn-primary mx-2 my-5" href="{% url 'todo:home' %}">All Tasks</a>
+            <a class="btn  btn-lg btn-primary mx-2 my-5" href="{% url 'todo:completed_tasks' %}">Incomplete Tasks</a>
+        </div>
+    </div>
+</div>
+{%endblock%}

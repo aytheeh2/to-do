@@ -10,6 +10,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 
 class TaskList(LoginRequiredMixin, ListView):
@@ -33,6 +34,7 @@ class TaskDetail(LoginRequiredMixin, UpdateView):
     template_name = 'detail.html'
     context_object_name = 'taskdetail'
     fields = ('name', 'description', 'completed')
+    # imp should add a message here showing success
     success_url = reverse_lazy('todo:home')
 
 # def TaskDetail(request, username):
@@ -52,14 +54,43 @@ def completed(request, pk):
     task = Task.objects.get(pk=pk)
     task.completed = True
     task.save()
+    messages.success(request, f'Task {task.name} marked as completed! ')
     return redirect('todo:home')
+
+
+@login_required
+def completed_tasks(request):
+    tasks = Task.objects.filter(completed=True).order_by('-date_modified')
+    return render(request, 'completed.html', {'tasks': tasks})
+
+
+@login_required
+def incompleted_tasks(request):
+    tasks = Task.objects.filter(completed=False).order_by('-date_modified')
+    return render(request, 'incomplete.html', {'tasks': tasks})
 
 
 class taskDelete(LoginRequiredMixin, DeleteView):
     model = Task
     template_name = 'delete.html'
     context_object_name = 'task'
+    # imp should add a message here showing success
     success_url = reverse_lazy('todo:home')
+
+
+@login_required
+def clearAllTasks(request):
+    tasks = Task.objects.filter(user=request.user)
+    if tasks:
+        if request.method == "POST":
+            tasks = Task.objects.filter(user=request.user)
+            tasks.delete()
+            messages.success(request, f'All of your tasks are deleted! ')
+            return redirect('todo:home')
+        return render(request, 'clearalltasks.html')
+    else:
+        messages.success(request, 'You have no tasks to delete! ')
+        return redirect("todo:home")
 
 
 @login_required
@@ -72,9 +103,12 @@ def addTask(request):
             user=username, name=name, description=description)
         if task:
             task.save()
+            messages.success(request, f'Task {name} added!')
             return redirect('todo:home')
         else:
-            return HttpResponse(request, 'form invalid')
+            messages.success(request, f'Failed to add task!')
+            return redirect('todo:home')
+            # return HttpResponse(request, 'form invalid')
 
     return render(request, 'addtask.html')
 
@@ -98,6 +132,7 @@ def login_user(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
+            messages.success(request, 'Login Successful')
             return redirect('todo:home')
     return render(request, 'login.html')
 
@@ -113,11 +148,13 @@ def register(request):
             user = User.objects.create_user(
                 username=username, password=password1, email=email)
             user.save()
+            messages.success(request, 'User Registered Successfully')
 
             # Log in the user after registration
             user = authenticate(username=username, password=password1)
             if user:
                 login(request, user)
+                messages.success(request, 'Login Successful')
                 return redirect('todo:home')
             else:
                 return HttpResponse('Failed to authenticate user after registration')

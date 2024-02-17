@@ -14,6 +14,9 @@ urlpatterns=[
     path('logout/',logoutview.as_view(),name='logout'),
     path('search/',views.search,name='search'),
     path('register/',views.register,name='register'),
+    path('completed_tasks/',views.completed_tasks,name='completed_tasks'),
+    path('incompleted_tasks/',views.incompleted_tasks,name='incompleted_tasks'),
+    path('clear-all/',views.clearAllTasks,name='clearalltasks'),
     
 
 ]

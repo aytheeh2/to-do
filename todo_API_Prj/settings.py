@@ -17,7 +17,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = 'todo:home'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = 'todo:home'
 LOGOUT_REDIRECT_URL = 'todo:login'
 
